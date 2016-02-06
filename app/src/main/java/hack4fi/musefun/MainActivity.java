@@ -77,17 +77,6 @@ public class MainActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
     }
 
 
@@ -198,9 +187,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mAdapter != null) mAdapter.enableForegroundDispatch(this, mPendingIntent, mFilters, mTechLists);
-        Log.i("Foreground dispatch", "onResume" + mAdapter.isEnabled());
-
+        if (mAdapter != null) {
+            mAdapter.enableForegroundDispatch(this, mPendingIntent, mFilters, mTechLists);
+            Log.i("Foreground dispatch", "onResume" + mAdapter.isEnabled());
+        }
     }
     @Override
     public void onNewIntent(Intent intent) {
