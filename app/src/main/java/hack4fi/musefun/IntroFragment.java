@@ -5,10 +5,18 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.android.youtube.player.YouTubePlayerView;
 
 
 /**
@@ -45,24 +53,32 @@ public class IntroFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_intro, container, false);
 
+//        YouTubeFragment youTubeFragment = YouTubeFragment.newInstance();
+//        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+//        transaction.add(R.id.youtube_fragment_container, youTubeFragment).commit();
+
         //final YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
 //        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 //        transaction.add(R.id.youtube_fragment, youTubePlayerFragment).commit();
-//
-//        youTubePlayerFragment.initialize(DeveloperKey.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
-//            @Override
-//            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-//                if (!b) {
-//                    youTubePlayer.loadVideo("2zNSgSzhBfM");
-//                    youTubePlayer.play();
-//                }
-//            }
-//
-//            @Override
-//            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-//
-//            }
-//        });
+
+        YouTubePlayerSupportFragment youTubePlayerFragment = (YouTubePlayerSupportFragment)
+                getChildFragmentManager().findFragmentById(R.id.youtube_fragment);
+
+        youTubePlayerFragment.initialize(DeveloperKey.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider arg0, YouTubePlayer youTubePlayer, boolean b) {
+                if (!b) {
+                    youTubePlayer.loadVideo("2zNSgSzhBfM");
+                    youTubePlayer.play();
+                }
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider arg0, YouTubeInitializationResult arg1) {
+                Log.i("YouTube player", "Failed to init youtube player");
+            }
+        });
 
         final Button button = (Button) view.findViewById(R.id.start_button);
         button.setOnClickListener(new View.OnClickListener(){
