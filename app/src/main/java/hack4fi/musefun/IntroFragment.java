@@ -1,18 +1,14 @@
 package hack4fi.musefun;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import android.widget.Button;
 
 
 /**
@@ -49,7 +45,7 @@ public class IntroFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_intro, container, false);
 
-//        final YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
+        //final YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
 //        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 //        transaction.add(R.id.youtube_fragment, youTubePlayerFragment).commit();
 //
@@ -67,6 +63,15 @@ public class IntroFragment extends Fragment {
 //
 //            }
 //        });
+
+        final Button button = (Button) view.findViewById(R.id.start_button);
+        button.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).nextPage();
+            }
+        });
 
         return view;
     }

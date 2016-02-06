@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -100,6 +99,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void nextPage() {
+        final int pages = mViewPager.getAdapter().getCount();
+        final int nextPage = mViewPager.getCurrentItem() + 1;
+        if(nextPage < pages) {
+            mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+        }
     }
 
     /**
@@ -148,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        private final Fragment introFragment = IntroFragment.newInstance();
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -157,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             if(position == 0) {
-                return IntroFragment.newInstance();
+                return introFragment;
             }
             return PlaceholderFragment.newInstance(position + 1);
         }
@@ -181,8 +190,6 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-
-
 
     @Override
     protected void onResume() {
