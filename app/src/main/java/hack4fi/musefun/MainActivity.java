@@ -1,5 +1,12 @@
 package hack4fi.musefun;
 
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.nfc.FormatException;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,8 +26,13 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.IOException;
 
+public class MainActivity extends AppCompatActivity {
+    private NfcAdapter mAdapter;
+    private PendingIntent mPendingIntent;
+    private IntentFilter[] mFilters;
+    private String[][] mTechLists;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -39,6 +52,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAdapter = NfcAdapter.getDefaultAdapter(this);
+// Create a generic PendingIntent that will be deliver to this activity. The NFC stack
+        // will fill in the intent with the details of the discovered tag before delivering to
+        // this activity.
+        mPendingIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        mFilters = new IntentFilter[] {
+                //    td
+                //   ndef
+        };
+
+        mTechLists = new String[][] { new String[] {Ndef.class.getName() }}; // new String[] { NfcF.class.getName(),Ndef.class.getName() } , NfcA.class.getName()
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -116,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
             return rootView;
         }
     }
@@ -155,5 +182,44 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mAdapter != null) mAdapter.enableForegroundDispatch(this, mPendingIntent, mFilters, mTechLists);
+        Log.i("Foreground dispatch", "onResume" + mAdapter.isEnabled());
+
+    }
+    @Override
+    public void onNewIntent(Intent intent) {
+        Log.i("Foreground dispatch", "Discovered tag with intent: " + intent);
+
+        Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        Log.i("Foreground dispatch", "Discovered tag with intent: " + tagFromIntent.getTechList().length);
+        Log.i("Foreground dispatch", "Discovered tag with intent: " + tagFromIntent.getTechList()[0]);
+        Log.i("Foreground dispatch", "Discovered tag with intent: " + tagFromIntent.getTechList()[1]);
+        Log.i("Foreground dispatch", "Discovered tag with intent: " + tagFromIntent.getTechList()[2]);
+
+        Ndef ndef= Ndef.get(tagFromIntent);
+        try {
+            ndef.connect();
+            Log.i("Foreground dispatch", "Discovered tag with intent: " + ndef.canMakeReadOnly());
+
+            Log.i("Foreground dispatch", "Discovered tag with intent: " + new String(ndef.getNdefMessage().getRecords()[0].getPayload()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (FormatException e) {
+            e.printStackTrace();
+        }
+        //mText.setText("Discovered tag " + ++mCount + " with intent: " + intent);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mAdapter != null) mAdapter.disableForegroundDispatch(this);
     }
 }
