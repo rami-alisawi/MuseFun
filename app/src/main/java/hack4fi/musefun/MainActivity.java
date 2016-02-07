@@ -28,6 +28,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
@@ -143,8 +145,9 @@ public class MainActivity extends AppCompatActivity {
             ImageView imageView=(ImageView)rootView.findViewById(R.id.imageView);
             //imageView.setImageBitmap(BitmapFactory.decodeFile("/data/data/com.myapp/files/someimage.jpg"));
 
-            Drawable myIcon = getResources().getDrawable( R.drawable.screen1);
-            imageView.setImageDrawable(myIcon);
+            Picasso.with(this.getContext()).load(R.drawable.screen1).into(imageView);
+//            Drawable myIcon = getResources().getDrawable( R.drawable.screen1);
+//            imageView.setImageDrawable(myIcon);
             return rootView;
         }
     }
