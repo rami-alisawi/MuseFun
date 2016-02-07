@@ -44,6 +44,7 @@ public class IntroFragment extends Fragment {
          if(fragment==null)fragment = new IntroFragment();
         return fragment;
     }
+
     public IntroFragment() {
         // Required empty public constructor
     }

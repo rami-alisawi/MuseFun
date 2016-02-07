@@ -145,7 +145,13 @@ public class MainActivity extends AppCompatActivity {
             ImageView imageView=(ImageView)rootView.findViewById(R.id.imageView);
             //imageView.setImageBitmap(BitmapFactory.decodeFile("/data/data/com.myapp/files/someimage.jpg"));
 
-            Picasso.with(this.getContext()).load(R.drawable.screen1).into(imageView);
+            int section_num = getArguments().getInt(ARG_SECTION_NUMBER);
+
+            if(section_num == 2) {
+                Picasso.with(getContext()).load(R.drawable.screen1).into(imageView);
+            } else {
+                Picasso.with(getContext()).load(R.drawable.screen2).into(imageView);
+            }
 //            Drawable myIcon = getResources().getDrawable( R.drawable.screen1);
 //            imageView.setImageDrawable(myIcon);
             return rootView;
