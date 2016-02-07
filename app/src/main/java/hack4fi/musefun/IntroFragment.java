@@ -39,8 +39,9 @@ public class IntroFragment extends Fragment {
      * @return A new instance of fragment IntroFragment.
      */
     // TODO: Rename and change types and number of parameters
+   private static IntroFragment fragment;
     public static IntroFragment newInstance() {
-        IntroFragment fragment = new IntroFragment();
+         if(fragment==null)fragment = new IntroFragment();
         return fragment;
     }
     public IntroFragment() {
@@ -70,7 +71,7 @@ public class IntroFragment extends Fragment {
             public void onInitializationSuccess(YouTubePlayer.Provider arg0, YouTubePlayer youTubePlayer, boolean b) {
                 if (!b) {
                     youTubePlayer.loadVideo("2zNSgSzhBfM");
-                    youTubePlayer.play();
+                   // youTubePlayer.play();
                 }
             }
 

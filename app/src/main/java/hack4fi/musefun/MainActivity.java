@@ -205,19 +205,18 @@ public class MainActivity extends AppCompatActivity {
 
         Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         Log.i("Foreground dispatch", "Discovered tag with intent: " + tagFromIntent.getTechList().length);
-        Log.i("Foreground dispatch", "Discovered tag with intent: " + tagFromIntent.getTechList()[0]);
-        Log.i("Foreground dispatch", "Discovered tag with intent: " + tagFromIntent.getTechList()[1]);
-        Log.i("Foreground dispatch", "Discovered tag with intent: " + tagFromIntent.getTechList()[2]);
+    //    Log.i("Foreground dispatch", "Discovered tag with intent: " + tagFromIntent.getTechList()[0]);
+  //      Log.i("Foreground dispatch", "Discovered tag with intent: " + tagFromIntent.getTechList()[1]);
+//        Log.i("Foreground dispatch", "Discovered tag with intent: " + tagFromIntent.getTechList()[2]);
 
         Ndef ndef= Ndef.get(tagFromIntent);
         try {
             ndef.connect();
             Log.i("Foreground dispatch", "Discovered tag with intent: " + ndef.canMakeReadOnly());
+           nextPage();
 
-            Log.i("Foreground dispatch", "Discovered tag with intent: " + new String(ndef.getNdefMessage().getRecords()[0].getPayload()));
+//            Log.i("Foreground dispatch", "Discovered tag with intent: " + new String(ndef.getNdefMessage().getRecords()[0].getPayload()));
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (FormatException e) {
             e.printStackTrace();
         }
         //mText.setText("Discovered tag " + ++mCount + " with intent: " + intent);
