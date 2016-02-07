@@ -63,24 +63,24 @@ public class IntroFragment extends Fragment {
 //        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 //        transaction.add(R.id.youtube_fragment, youTubePlayerFragment).commit();
 
-        YouTubePlayerSupportFragment youTubePlayerFragment = (YouTubePlayerSupportFragment)
-                getChildFragmentManager().findFragmentById(R.id.youtube_fragment);
-
-        youTubePlayerFragment.initialize(DeveloperKey.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
-
-            @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider arg0, YouTubePlayer youTubePlayer, boolean b) {
-                if (!b) {
-                    youTubePlayer.loadVideo("2zNSgSzhBfM");
-                   // youTubePlayer.play();
-                }
-            }
-
-            @Override
-            public void onInitializationFailure(YouTubePlayer.Provider arg0, YouTubeInitializationResult arg1) {
-                Log.i("YouTube player", "Failed to init youtube player");
-            }
-        });
+//        YouTubePlayerSupportFragment youTubePlayerFragment = (YouTubePlayerSupportFragment)
+//                getChildFragmentManager().findFragmentById(R.id.youtube_fragment);
+//
+//        youTubePlayerFragment.initialize(DeveloperKey.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+//
+//            @Override
+//            public void onInitializationSuccess(YouTubePlayer.Provider arg0, YouTubePlayer youTubePlayer, boolean b) {
+//                if (!b) {
+//                    youTubePlayer.loadVideo("2zNSgSzhBfM");
+//                   // youTubePlayer.play();
+//                }
+//            }
+//
+//            @Override
+//            public void onInitializationFailure(YouTubePlayer.Provider arg0, YouTubeInitializationResult arg1) {
+//                Log.i("YouTube player", "Failed to init youtube player");
+//            }
+//        });
 
         final Button button = (Button) view.findViewById(R.id.start_button);
         button.setOnClickListener(new View.OnClickListener(){

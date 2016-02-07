@@ -5,11 +5,13 @@
     tools:context="hack4fi.musefun.IntroFragment"
     android:orientation="vertical">
 
+    <!--
     <fragment
         android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
         android:id="@+id/youtube_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+        -->
 
     <TextView
         android:layout_width="wrap_content"
